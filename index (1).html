@@ -1,0 +1,2326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigger.dev - Enterprise Automation Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 30%, #312E81 60%, #1E293B 100%);
+            color: #F8FAFC;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Enhanced Header */
+        .header {
+            padding: 20px 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(34, 211, 238, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 26px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #10B981 0%, #22D3EE 50%, #8B5CF6 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(34, 211, 238, 0.3); }
+            to { box-shadow: 0 0 20px rgba(34, 211, 238, 0.6); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #CBD5E1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #22D3EE, #10B981);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #22D3EE;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .auth-button {
+            background: transparent;
+            color: #CBD5E1;
+            padding: 10px 20px;
+            border: 1px solid rgba(203, 213, 225, 0.3);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .auth-button:hover {
+            color: #22D3EE;
+            border-color: #22D3EE;
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #10B981 0%, #22D3EE 100%);
+            color: white;
+            padding: 12px 26px;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(34, 211, 238, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 211, 238, 0.4);
+        }
+
+        /* Enhanced Hero */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #22D3EE 0%, #10B981 30%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #94A3B8;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #CBD5E1;
+            margin-bottom: 45px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            margin-bottom: 80px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10B981 0%, #22D3EE 100%);
+            color: white;
+            padding: 18px 36px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background: rgba(30, 41, 59, 0.8);
+            color: #F8FAFC;
+            padding: 18px 36px;
+            border: 2px solid rgba(34, 211, 238, 0.3);
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            border-color: #22D3EE;
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        .btn-github {
+            background: linear-gradient(135deg, #24292E 0%, #586069 100%);
+            color: white;
+            padding: 18px 36px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(36, 41, 46, 0.3);
+        }
+
+        .btn-github:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(36, 41, 46, 0.4);
+        }
+
+        /* Enhanced Dashboard */
+        .dashboard-preview {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(51, 65, 85, 0.6) 100%);
+            border-radius: 24px;
+            padding: 35px;
+            border: 2px solid rgba(34, 211, 238, 0.2);
+            backdrop-filter: blur(20px);
+            margin-bottom: 100px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .dashboard-preview::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, #22D3EE, #10B981, #8B5CF6, #22D3EE);
+            border-radius: 24px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .dashboard-title {
+            font-size: 28px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .title-icon {
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+            padding: 8px;
+            border-radius: 10px;
+            font-size: 20px;
+        }
+
+        .dashboard-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .control-btn {
+            background: rgba(15, 23, 42, 0.6);
+            color: #CBD5E1;
+            padding: 10px 18px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .control-btn:hover {
+            border-color: #22D3EE;
+            color: #22D3EE;
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        .status-indicators {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 10px 18px;
+            border-radius: 25px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .status-item:hover {
+            transform: scale(1.05);
+            border-color: rgba(34, 211, 238, 0.5);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-active { background: #10B981; }
+        .status-pending { background: #F59E0B; }
+        .status-error { background: #EF4444; }
+
+        /* Enhanced Workflow Canvas */
+        .workflow-canvas {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 27, 75, 0.7) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .workflow-canvas::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .workflow-node {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(51, 65, 85, 0.8) 100%);
+            border: 2px solid rgba(148, 163, 184, 0.3);
+            border-radius: 16px;
+            padding: 25px 20px;
+            width: 200px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .workflow-node:hover {
+            transform: scale(1.08) translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .node-trigger { 
+            top: 50px; 
+            left: 50px; 
+            border-color: #10B981;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
+        .node-process { 
+            top: 50px; 
+            left: 300px; 
+            border-color: #22D3EE;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.2) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
+        .node-api { 
+            top: 50px; 
+            left: 550px; 
+            border-color: #F59E0B;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
+        .node-output { 
+            top: 50px; 
+            left: 800px; 
+            border-color: #8B5CF6;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+
+        .node-execution { 
+            top: 220px; 
+            left: 300px; 
+            border-color: #EF4444;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
+        .node-database { 
+            top: 220px; 
+            left: 550px; 
+            border-color: #06B6D4;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+
+        .node-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .node-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #F8FAFC;
+        }
+
+        .node-description {
+            font-size: 12px;
+            color: #94A3B8;
+            margin-bottom: 10px;
+        }
+
+        .node-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-running {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+            border: 1px solid #10B981;
+        }
+
+        .status-idle {
+            background: rgba(148, 163, 184, 0.2);
+            color: #94A3B8;
+            border: 1px solid #94A3B8;
+        }
+
+        .workflow-connection {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, #22D3EE, #10B981);
+            border-radius: 2px;
+            animation: dataFlow 2s infinite;
+        }
+
+        @keyframes dataFlow {
+            0% { box-shadow: 0 0 5px rgba(34, 211, 238, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(34, 211, 238, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(34, 211, 238, 0.5); }
+        }
+
+        .connection-1 { top: 88px; left: 250px; width: 50px; }
+        .connection-2 { top: 88px; left: 500px; width: 50px; }
+        .connection-3 { top: 88px; left: 750px; width: 50px; }
+
+        /* Enhanced Features */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #22D3EE 0%, #10B981 30%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #94A3B8;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+            margin-bottom: 80px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(51, 65, 85, 0.6) 100%);
+            border-radius: 24px;
+            padding: 35px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(34, 211, 238, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .icon-ai { background: linear-gradient(135deg, #8B5CF6, #EC4899); }
+        .icon-hub { background: linear-gradient(135deg, #10B981, #22D3EE); }
+        .icon-visual { background: linear-gradient(135deg, #F59E0B, #EF4444); }
+        .icon-modular { background: linear-gradient(135deg, #06B6D4, #8B5CF6); }
+
+        .feature-card h3 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 18px;
+            color: #F8FAFC;
+        }
+
+        .feature-card p {
+            color: #CBD5E1;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+        }
+
+        .feature-stats {
+            display: flex;
+            gap: 25px;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #22D3EE;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #94A3B8;
+            font-weight: 600;
+        }
+
+        /* Enhanced Integrations */
+        .integrations {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.3) 0%, rgba(15, 23, 42, 0.5) 100%);
+            border-radius: 30px;
+            margin: 60px 0;
+        }
+
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .integration-item {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(51, 65, 85, 0.6) 100%);
+            border-radius: 18px;
+            padding: 25px 20px;
+            text-align: center;
+            border: 2px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.4s;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .integration-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.2), transparent);
+            transition: left 0.3s;
+        }
+
+        .integration-item:hover {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(30, 41, 59, 0.8) 100%);
+            border-color: #22D3EE;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(34, 211, 238, 0.2);
+        }
+
+        .integration-item:hover::before {
+            left: 100%;
+        }
+
+        .integration-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #22D3EE, #10B981);
+            border-radius: 12px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: white;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .integration-name {
+            font-weight: 700;
+            color: #F8FAFC;
+            font-size: 14px;
+        }
+
+        .integration-status {
+            font-size: 11px;
+            color: #10B981;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        /* Enhanced Metrics */
+        .metrics {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(51, 65, 85, 0.4) 100%);
+            padding: 80px 0;
+            margin: 80px 0;
+            border-radius: 30px;
+            border: 1px solid rgba(34, 211, 238, 0.2);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+            padding: 40px 25px;
+            border-radius: 24px;
+            border: 2px solid rgba(148, 163, 184, 0.1);
+            transition: all 0.4s;
+            backdrop-filter: blur(10px);
+        }
+
+        .metric-card:hover {
+            transform: scale(1.05);
+            border-color: rgba(34, 211, 238, 0.5);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .metric-value {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #22D3EE 0%, #10B981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            display: block;
+            line-height: 1;
+        }
+
+        .metric-label {
+            color: #CBD5E1;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.9) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            border: 2px solid rgba(34, 211, 238, 0.3);
+            backdrop-filter: blur(20px);
+            transform: scale(0.8);
+            transition: transform 0.3s;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #F8FAFC;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #94A3B8;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #EF4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .modal-body {
+            color: #CBD5E1;
+            line-height: 1.7;
+        }
+
+        .modal-body h4 {
+            color: #22D3EE;
+            margin: 20px 0 10px;
+            font-weight: 700;
+        }
+
+        .modal-body ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-body li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .modal-body li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10B981;
+            font-weight: bold;
+        }
+
+        .github-connect {
+            background: linear-gradient(135deg, #24292E 0%, #586069 100%);
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .github-connect:hover {
+            background: linear-gradient(135deg, #2F363D 0%, #6A737D 100%);
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Footer */
+        .footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 27, 75, 0.6) 100%);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            color: #F8FAFC;
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #94A3B8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #22D3EE;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            color: #94A3B8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .workflow-node {
+                position: static;
+                margin: 15px auto;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .workflow-connection {
+                display: none;
+            }
+            
+            .workflow-canvas {
+                padding: 20px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { 
+                font-size: 2.8rem; 
+            }
+            
+            .hero-buttons { 
+                flex-direction: column; 
+                align-items: center; 
+                gap: 15px;
+            }
+            
+            .hero-buttons > * {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .nav-links { 
+                display: none; 
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .status-indicators {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animations */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid #22D3EE;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Success/Error States */
+        .success-message {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(30, 41, 59, 0.8) 100%);
+            color: #10B981;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid #10B981;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(30, 41, 59, 0.8) 100%);
+            color: #EF4444;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid #EF4444;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.9) 100%);
+            color: #F8FAFC;
+            padding: 20px 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            backdrop-filter: blur(20px);
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            z-index: 3000;
+            max-width: 350px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .notification-title {
+            font-weight: 700;
+            color: #22D3EE;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: #94A3B8;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .notification-body {
+            color: #CBD5E1;
+            font-size: 14px;
+        }
+
+        /* Code Preview */
+        .code-preview {
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+
+        .code-preview pre {
+            color: #CBD5E1;
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .code-preview .keyword {
+            color: #8B5CF6;
+        }
+
+        .code-preview .string {
+            color: #10B981;
+        }
+
+        .code-preview .comment {
+            color: #6B7280;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo" onclick="scrollToTop()">
+                    <div class="logo-icon">⚡</div>
+                    <span>Trigger.dev</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#features" onclick="scrollToSection('features')">Features</a></li>
+                    <li><a href="#integrations" onclick="scrollToSection('integrations')">Integrations</a></li>
+                    <li><a href="#docs" onclick="openModal('docsModal')">Docs</a></li>
+                    <li><a href="#pricing" onclick="openModal('pricingModal')">Pricing</a></li>
+                </ul>
+                <div class="header-actions">
+                    <button class="auth-button" onclick="openModal('loginModal')">Sign In</button>
+                    <button class="cta-button" onclick="startOnboarding()">Get Started</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-subtitle">🚀 Next-Generation Automation Platform</div>
+                <h1 class="slide-in">Enterprise Automation<br>Made Simple</h1>
+                <p class="slide-in">Transform complex workflows into visual, AI-powered automations. Connect GitHub, deploy instantly, and scale without limits. Zero infrastructure, maximum productivity.</p>
+                <div class="hero-buttons slide-in">
+                    <button class="btn-primary" onclick="openWorkflowStudio()">
+                        <span>🎨</span>
+                        Start Building
+                    </button>
+                    <button class="btn-github" onclick="connectGitHub()">
+                        <span>📦</span>
+                        Connect GitHub
+                    </button>
+                    <button class="btn-secondary" onclick="openModal('docsModal')">
+                        <span>📖</span>
+                        View Documentation
+                    </button>
+                </div>
+
+                <div class="dashboard-preview slide-in">
+                    <div class="dashboard-header">
+                        <h3 class="dashboard-title">
+                            <div class="title-icon">🎛️</div>
+                            Workflow Studio
+                        </h3>
+                        <div class="dashboard-controls">
+                            <button class="control-btn" onclick="deployWorkflow()">🚀 Deploy</button>
+                            <button class="control-btn" onclick="saveWorkflow()">💾 Save</button>
+                            <button class="control-btn" onclick="testWorkflow()">🧪 Test</button>
+                        </div>
+                    </div>
+
+                    <div class="status-indicators">
+                        <div class="status-item" onclick="showActiveWorkflows()">
+                            <div class="status-dot status-active"></div>
+                            <span>12 Active</span>
+                        </div>
+                        <div class="status-item" onclick="showPendingWorkflows()">
+                            <div class="status-dot status-pending"></div>
+                            <span>3 Pending</span>
+                        </div>
+                        <div class="status-item" onclick="showErrorWorkflows()">
+                            <div class="status-dot status-error"></div>
+                            <span>0 Errors</span>
+                        </div>
+                    </div>
+
+                    <div class="workflow-canvas" id="workflowCanvas">
+                        <div class="workflow-node node-trigger" onclick="configureNode('trigger')">
+                            <div class="node-icon">🔔</div>
+                            <div class="node-title">Webhook Trigger</div>
+                            <div class="node-description">GitHub Push Event</div>
+                            <div class="node-status status-running">Running</div>
+                        </div>
+
+                        <div class="workflow-node node-process" onclick="configureNode('process')">
+                            <div class="node-icon">🧠</div>
+                            <div class="node-title">AI Processing</div>
+                            <div class="node-description">Code Analysis</div>
+                            <div class="node-status status-running">Running</div>
+                        </div>
+
+                        <div class="workflow-node node-api" onclick="configureNode('api')">
+                            <div class="node-icon">🔗</div>
+                            <div class="node-title">API Call</div>
+                            <div class="node-description">Slack Notification</div>
+                            <div class="node-status status-idle">Idle</div>
+                        </div>
+
+                        <div class="workflow-node node-output" onclick="configureNode('output')">
+                            <div class="node-icon">📤</div>
+                            <div class="node-title">Send Result</div>
+                            <div class="node-description">Email Report</div>
+                            <div class="node-status status-idle">Idle</div>
+                        </div>
+
+                        <div class="workflow-node node-execution" onclick="configureNode('execution')">
+                            <div class="node-icon">⚡</div>
+                            <div class="node-title">Code Execution</div>
+                            <div class="node-description">Run Tests</div>
+                            <div class="node-status status-running">Running</div>
+                        </div>
+
+                        <div class="workflow-node node-database" onclick="configureNode('database')">
+                            <div class="node-icon">💾</div>
+                            <div class="node-title">Database</div>
+                            <div class="node-description">Save Results</div>
+                            <div class="node-status status-idle">Idle</div>
+                        </div>
+
+                        <div class="workflow-connection connection-1"></div>
+                        <div class="workflow-connection connection-2"></div>
+                        <div class="workflow-connection connection-3"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">Revolutionary Features</h2>
+                <div class="section-subtitle">Experience the future of enterprise automation with AI-powered tools and seamless integrations</div>
+                <div class="features-grid">
+                    <div class="feature-card slide-in" onclick="openFeatureModal('ai')">
+                        <div class="feature-icon icon-ai">🤖</div>
+                        <h3>Adaptive AI Interface</h3>
+                        <p>Context-aware assistance with personalized onboarding paths, predictive workflow suggestions, and intelligent error detection that learns from your patterns.</p>
+                        <div class="feature-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">65%</span>
+                                <span class="stat-label">Faster Onboarding</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">AI</span>
+                                <span class="stat-label">Powered</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-card slide-in" onclick="openFeatureModal('hub')">
+                        <div class="feature-icon icon-hub">🔌</div>
+                        <h3>API Automation Hub</h3>
+                        <p>Access 100+ pre-built integration templates with a community-driven marketplace, one-click deployment, and automatic authentication handling.</p>
+                        <div class="feature-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">100+</span>
+                                <span class="stat-label">Integrations</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">3x</span>
+                                <span class="stat-label">Faster Setup</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-card slide-in" onclick="openFeatureModal('visual')">
+                        <div class="feature-icon icon-visual">👁️</div>
+                        <h3>Visual Workflow Studio</h3>
+                        <p>Drag-and-drop pipeline design with real-time execution monitoring, advanced visual debugging tools, and collaborative editing capabilities.</p>
+                        <div class="feature-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">50%</span>
+                                <span class="stat-label">Faster Debug</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">Live</span>
+                                <span class="stat-label">Monitoring</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-card slide-in" onclick="openFeatureModal('modular')">
+                        <div class="feature-icon icon-modular">🔧</div>
+                        <h3>Modular Architecture</h3>
+                        <p>Hot-swappable components with version-controlled workflows, non-breaking updates, and enterprise-grade security for maximum business agility.</p>
+                        <div class="feature-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">90%</span>
+                                <span class="stat-label">Faster Updates</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">Zero</span>
+                                <span class="stat-label">Downtime</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="integrations" class="integrations">
+            <div class="container">
+                <h2 class="section-title">100+ Ready-to-Use Integrations</h2>
+                <div class="section-subtitle">Connect your favorite tools in seconds with pre-built templates and automated authentication</div>
+                <div class="integrations-grid">
+                    <div class="integration-item" onclick="integrateService('Slack')">
+                        <div class="integration-icon">SL</div>
+                        <div class="integration-name">Slack</div>
+                        <div class="integration-status">✓ Ready</div>
+                    </div>
+                    <div class="integration-item" onclick="integrateService('GitHub')">
+                        <div class="integration-icon">GH</div>
+                        <div class="integration-name">GitHub</div>
+                        <div class="integration-status">✓ Connected</div>
+                    </div>
+                    <div class="integration-item" onclick="integrateService('Salesforce')">
+                        <div class="integration-icon">SF</div>
+                        <div class="integration-name">Salesforce</div>
+                        <div class="integration-status">✓ Ready</div>
+                    </div>
+                    <div class="integration-item" onclick="integrateService('Jira')">
+                        <div class="integration-icon">JR</div>
+                        <div class="integration-name">Jira</div>
+                        <div class="integration-status">✓ Ready</div>
+                    </div>
+                    <div class="integration-item" onclick="integrateService('Twitter')">
+                        <div class="integration-icon">TW</div>
+                        <div class="integration-name">Twitter</div>
+                        <div class="integration-status">✓ Ready</div>
+                    </div>
+                    <div class="integration-item" onclick="integrateService('ChatGPT')">
+                        <div class="integration-icon">GP</div>
+                        <div class="integration-name">ChatGPT</div>
+                        <div class="integration-status">✓ Ready</div>
+                    </div>
+                    <div class="integration-item" onclick="integrateService('Stripe')">
+                        <div class="integration-icon">ST</div>
+                        <div class="integration-name">Stripe</div>
+                        <div class="integration-status">✓ Ready</div>
+                    </div>
+                    <div class="integration-item" onclick="integrateService('Discord')">
+                        <div class="integration-icon">DS</div>
+                        <div class="integration-name">Discord</div>
+                        <div class="integration-status">✓ Ready</div>
+                    </div>
+                    <div class="integration-item" onclick="integrateService('Notion')">
+                        <div class="integration-icon">NT</div>
+                        <div class="integration-name">Notion</div>
+                        <div class="integration-status">✓ Ready</div>
+                    </div>
+                    <div class="integration-item" onclick="integrateService('Airtable')">
+                        <div class="integration-icon">AT</div>
+                        <div class="integration-name">Airtable</div>
+                        <div class="integration-status">✓ Ready</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="metrics">
+            <div class="container">
+                <div class="metrics-grid">
+                    <div class="metric-card" onclick="showMetricDetails('onboarding')">
+                        <span class="metric-value" id="metric1">70%</span>
+                        <div class="metric-label">Reduction in onboarding time</div>
+                    </div>
+                    <div class="metric-card" onclick="showMetricDetails('integration')">
+                        <span class="metric-value" id="metric2">3x</span>
+                        <div class="metric-label">Faster integration development</div>
+                    </div>
+                    <div class="metric-card" onclick="showMetricDetails('debugging')">
+                        <span class="metric-value" id="metric3">50%</span>
+                        <div class="metric-label">Decrease in debugging time</div>
+                    </div>
+                    <div class="metric-card" onclick="showMetricDetails('modifications')">
+                        <span class="metric-value" id="metric4">90%</span>
+                        <div class="metric-label">Faster workflow modifications</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="openModal('featuresModal')">Features</a></li>
+                        <li><a href="#" onclick="openModal('pricingModal')">Pricing</a></li>
+                        <li><a href="#" onclick="openModal('securityModal')">Security</a></li>
+                        <li><a href="#" onclick="openModal('enterpriseModal')">Enterprise</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Developers</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="openModal('docsModal')">Documentation</a></li>
+                        <li><a href="#" onclick="openModal('apiModal')">API Reference</a></li>
+                        <li><a href="#" onclick="showExamples()">Examples</a></li>
+                        <li><a href="#" onclick="openModal('communityModal')">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="openModal('aboutModal')">About Team Tangle</a></li>
+                        <li><a href="#" onclick="openModal('careersModal')">Careers</a></li>
+                        <li><a href="#" onclick="openModal('blogModal')">Blog</a></li>
+                        <li><a href="#" onclick="openModal('contactModal')">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="openSocial('github')">GitHub</a></li>
+                        <li><a href="#" onclick="openSocial('twitter')">Twitter</a></li>
+                        <li><a href="#" onclick="openSocial('linkedin')">LinkedIn</a></li>
+                        <li><a href="#" onclick="openSocial('discord')">Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Trigger.dev - Enterprise Automation Platform by Team Tangle (Mayank, Abhishek, Akshat, Divyanshu)</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="workflowModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">🚀 Workflow Studio</h3>
+                <button class="close-btn" onclick="closeModal('workflowModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>Welcome to the Visual Workflow Builder!</h4>
+                <p>Create powerful automations with our drag-and-drop interface:</p>
+                <ul>
+                    <li>Visual workflow designer with real-time preview</li>
+                    <li>100+ pre-built components and triggers</li>
+                    <li>AI-powered suggestions and optimizations</li>
+                    <li>Live debugging and performance monitoring</li>
+                    <li>One-click deployment to production</li>
+                </ul>
+                <button class="github-connect" onclick="connectGitHub()">
+                    📦 Connect GitHub Repository
+                </button>
+                <div class="success-message" style="display: none;" id="githubSuccess">
+                    <span>✅</span>
+                    <span>GitHub connected successfully! Ready to deploy workflows.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="docsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">📖 Documentation</h3>
+                <button class="close-btn" onclick="closeModal('docsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>Quick Start Guide</h4>
+                <p>Get started with Trigger.dev in minutes:</p>
+                <ul>
+                    <li>Installation and setup</li>
+                    <li>Creating your first workflow</li>
+                    <li>Connecting integrations</li>
+                    <li>Deployment strategies</li>
+                    <li>Monitoring and debugging</li>
+                </ul>
+                
+                <h4>Sample Workflow Code</h4>
+                <div class="code-preview">
+                    <pre><code><span class="keyword">import</span> { TriggerDev } <span class="keyword">from</span> <span class="string">"@trigger.dev/sdk"</span>;
+
+<span class="keyword">const</span> client = <span class="keyword">new</span> TriggerDev({
+  id: <span class="string">"github-to-slack"</span>,
+  name: <span class="string">"GitHub to Slack Automation"</span>
+});
+
+client.defineJob({
+  id: <span class="string">"github-push"</span>,
+  name: <span class="string">"GitHub Push Handler"</span>,
+  version: <span class="string">"1.0.0"</span>,
+  trigger: github.triggers.push({
+    repo: <span class="string">"your-org/your-repo"</span>
+  }),
+  run: <span class="keyword">async</span> (payload, io, ctx) => {
+    <span class="comment">// AI-powered code analysis</span>
+    <span class="keyword">const</span> analysis = <span class="keyword">await</span> io.openai.chat(<span class="string">"analyze"</span>, {
+      model: <span class="string">"gpt-4"</span>,
+      messages: [
+        {
+          role: <span class="string">"user"</span>, 
+          content: <span class="string">`Analyze this commit: ${payload.commits[0].message}`</span>
+        }
+      ]
+    });
+
+    <span class="comment">// Send notification to Slack</span>
+    <span class="keyword">await</span> io.slack.postMessage(<span class="string">"notify"</span>, {
+      channel: <span class="string">"#dev-updates"</span>,
+      text: <span class="string">`🚀 New commit analyzed: ${analysis.content}`</span>
+    });
+  }
+});</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="githubModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">📦 Connect GitHub</h3>
+                <button class="close-btn" onclick="closeModal('githubModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>GitHub Integration Features</h4>
+                <p>Seamlessly connect your GitHub repositories:</p>
+                <ul>
+                    <li>Automatic webhook configuration</li>
+                    <li>Push, PR, and issue event triggers</li>
+                    <li>Code analysis with AI</li>
+                    <li>Automated testing workflows</li>
+                    <li>Deployment pipeline integration</li>
+                    <li>Security scanning and alerts</li>
+                </ul>
+                <button class="github-connect" onclick="initiateGitHubAuth()">
+                    🔗 Authorize GitHub Access
+                </button>
+                <p style="font-size: 12px; color: #6B7280; margin-top: 15px;">
+                    Secure OAuth 2.0 authentication. We only request necessary permissions.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="pricingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">💰 Pricing Plans</h3>
+                <button class="close-btn" onclick="closeModal('pricingModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>🚀 Starter Plan - Free</h4>
+                <ul>
+                    <li>Up to 10 workflows</li>
+                    <li>1,000 executions/month</li>
+                    <li>Basic integrations</li>
+                    <li>Community support</li>
+                </ul>
+
+                <h4>⚡ Pro Plan - $29/month</h4>
+                <ul>
+                    <li>Unlimited workflows</li>
+                    <li>100,000 executions/month</li>
+                    <li>Advanced integrations</li>
+                    <li>Priority support</li>
+                    <li>Team collaboration</li>
+                </ul>
+
+                <h4>🏢 Enterprise Plan - Custom</h4>
+                <ul>
+                    <li>Unlimited everything</li>
+                    <li>Custom integrations</li>
+                    <li>Dedicated support</li>
+                    <li>SLA guarantees</li>
+                    <li>On-premise deployment</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">🔐 Sign In</h3>
+                <button class="close-btn" onclick="closeModal('loginModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <button class="github-connect" onclick="signInWithGitHub()">
+                    📦 Sign in with GitHub
+                </button>
+                <button class="github-connect" style="background: linear-gradient(135deg, #4285F4 0%, #34A853 100%);" onclick="signInWithGoogle()">
+                    🔍 Sign in with Google
+                </button>
+                <p style="font-size: 12px; color: #6B7280; margin-top: 15px; text-align: center;">
+                    Secure authentication with industry-standard OAuth 2.0
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification System -->
+    <div id="notification" class="notification">
+        <div class="notification-header">
+            <div class="notification-title" id="notificationTitle">Success</div>
+            <button class="notification-close" onclick="hideNotification()">&times;</button>
+        </div>
+        <div class="notification-body" id="notificationBody">Action completed successfully!</div>
+    </div>
+
+    <script>
+        // Global state
+        let githubConnected = false;
+        let currentUser = null;
+        let workflows = [];
+        let notifications = [];
+
+        // Utility Functions
+        function showNotification(title, message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const titleEl = document.getElementById('notificationTitle');
+            const bodyEl = document.getElementById('notificationBody');
+            
+            titleEl.textContent = title;
+            bodyEl.textContent = message;
+            
+            // Add type-specific styling
+            notification.className = `notification show ${type}`;
+            
+            setTimeout(() => {
+                hideNotification();
+            }, 4000);
+        }
+
+        function hideNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.remove('show');
+        }
+
+        function simulateLoading(element, duration = 2000) {
+            element.classList.add('loading');
+            setTimeout(() => {
+                element.classList.remove('loading');
+            }, duration);
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Navigation Functions
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            showNotification('Navigation', 'Scrolled to top!', 'info');
+        }
+
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                showNotification('Navigation', `Navigated to ${sectionId} section!`, 'info');
+            }
+        }
+
+        // Authentication Functions
+        function startOnboarding() {
+            showNotification('Welcome!', 'Starting your Trigger.dev onboarding journey...');
+            setTimeout(() => {
+                openModal('workflowModal');
+            }, 1500);
+        }
+
+        function signInWithGitHub() {
+            showNotification('Authentication', 'Redirecting to GitHub OAuth...');
+            setTimeout(() => {
+                githubConnected = true;
+                currentUser = { name: 'John Developer', email: 'john@example.com' };
+                closeModal('loginModal');
+                showNotification('Success!', 'Successfully signed in with GitHub!');
+                updateUIForLoggedInUser();
+            }, 2000);
+        }
+
+        function signInWithGoogle() {
+            showNotification('Authentication', 'Redirecting to Google OAuth...');
+            setTimeout(() => {
+                currentUser = { name: 'Jane Developer', email: 'jane@example.com' };
+                closeModal('loginModal');
+                showNotification('Success!', 'Successfully signed in with Google!');
+                updateUIForLoggedInUser();
+            }, 2000);
+        }
+
+        function updateUIForLoggedInUser() {
+            const authButton = document.querySelector('.auth-button');
+            if (currentUser && authButton) {
+                authButton.textContent = currentUser.name;
+                authButton.onclick = () => showUserMenu();
+            }
+        }
+
+        function showUserMenu() {
+            const options = ['Profile', 'Settings', 'Billing', 'Sign Out'];
+            const choice = prompt(`Welcome ${currentUser.name}!\n\nChoose an option:\n${options.map((opt, i) => `${i+1}. ${opt}`).join('\n')}`);
+            
+            if (choice) {
+                const index = parseInt(choice) - 1;
+                if (index >= 0 && index < options.length) {
+                    showNotification('User Menu', `Selected: ${options[index]}`);
+                    if (options[index] === 'Sign Out') {
+                        signOut();
+                    }
+                }
+            }
+        }
+
+        function signOut() {
+            currentUser = null;
+            githubConnected = false;
+            const authButton = document.querySelector('.auth-button');
+            if (authButton) {
+                authButton.textContent = 'Sign In';
+                authButton.onclick = () => openModal('loginModal');
+            }
+            showNotification('Signed Out', 'Successfully signed out. See you soon!');
+        }
+
+        // GitHub Integration Functions
+        function connectGitHub() {
+            if (githubConnected) {
+                showNotification('Already Connected', 'GitHub is already connected to your account!');
+                return;
+            }
+
+            showNotification('GitHub', 'Initializing GitHub connection...');
+            openModal('githubModal');
+        }
+
+        function initiateGitHubAuth() {
+            showNotification('GitHub Auth', 'Redirecting to GitHub for authorization...');
+            
+            setTimeout(() => {
+                githubConnected = true;
+                closeModal('githubModal');
+                
+                // Show success in workflow modal if open
+                const githubSuccess = document.getElementById('githubSuccess');
+                if (githubSuccess) {
+                    githubSuccess.style.display = 'flex';
+                }
+                
+                showNotification('🎉 GitHub Connected!', 'Your repositories are now accessible in workflows!');
+                
+                // Update integration status
+                const githubIntegration = document.querySelector('.integration-item:nth-child(2) .integration-status');
+                if (githubIntegration) {
+                    githubIntegration.textContent = '✓ Connected';
+                    githubIntegration.style.color = '#10B981';
+                }
+            }, 2500);
+        }
+
+        // Workflow Functions
+        function openWorkflowStudio() {
+            showNotification('Workflow Studio', 'Opening visual workflow builder...');
+            openModal('workflowModal');
+        }
+
+        function configureNode(nodeType) {
+            const nodeConfigs = {
+                trigger: {
+                    title: '🔔 Webhook Trigger Configuration',
+                    options: ['GitHub Push Events', 'HTTP Webhooks', 'Schedule Triggers', 'Database Changes'],
+                    description: 'Configure when this workflow should start'
+                },
+                process: {
+                    title: '🧠 AI Processing Configuration', 
+                    options: ['Code Analysis', 'Text Processing', 'Image Recognition', 'Data Transformation'],
+                    description: 'Set up AI-powered data processing'
+                },
+                api: {
+                    title: '🔗 API Call Configuration',
+                    options: ['REST APIs', 'GraphQL', 'Webhooks', 'Database Queries'],
+                    description: 'Connect to external services'
+                },
+                output: {
+                    title: '📤 Output Configuration',
+                    options: ['Email Notifications', 'Slack Messages', 'File Generation', 'Database Updates'],
+                    description: 'Define how results are delivered'
+                },
+                execution: {
+                    title: '⚡ Code Execution Configuration',
+                    options: ['Node.js Scripts', 'Python Functions', 'Shell Commands', 'Docker Containers'],
+                    description: 'Run custom code logic'
+                },
+                database: {
+                    title: '💾 Database Configuration',
+                    options: ['PostgreSQL', 'MongoDB', 'Redis', 'Elasticsearch'],
+                    description: 'Store and retrieve data'
+                }
+            };
+
+            const config = nodeConfigs[nodeType];
+            if (config) {
+                const choice = prompt(`${config.title}\n\n${config.description}\n\nAvailable options:\n${config.options.map((opt, i) => `${i+1}. ${opt}`).join('\n')}\n\nSelect an option (1-${config.options.length}):`);
+                
+                if (choice && choice >= 1 && choice <= config.options.length) {
+                    const selectedOption = config.options[choice - 1];
+                    showNotification('Node Configured', `${nodeType} node configured with: ${selectedOption}`);
+                    
+                    // Update node status to running
+                    const nodeElement = document.querySelector(`.node-${nodeType} .node-status`);
+                    if (nodeElement) {
+                        nodeElement.textContent = 'Configured';
+                        nodeElement.className = 'node-status status-running';
+                    }
+                }
+            }
+        }
+
+        function deployWorkflow() {
+            if (!githubConnected) {
+                showNotification('⚠️ GitHub Required', 'Please connect your GitHub repository first!', 'warning');
+                setTimeout(() => connectGitHub(), 1500);
+                return;
+            }
+
+            const deployBtn = document.querySelector('.control-btn');
+            simulateLoading(deployBtn, 3000);
+            
+            showNotification('🚀 Deploying', 'Deploying workflow to production...');
+            
+            setTimeout(() => {
+                showNotification('✅ Deployed!', 'Workflow successfully deployed and running!');
+                updateWorkflowStatus('deployed');
+            }, 3000);
+        }
+
+        function saveWorkflow() {
+            const saveBtn = document.querySelector('.control-btn:nth-child(2)');
+            simulateLoading(saveBtn, 1500);
+            
+            showNotification('💾 Saving', 'Saving workflow configuration...');
+            
+            setTimeout(() => {
+                const workflowName = prompt('Enter a name for your workflow:', 'My Awesome Workflow');
+                if (workflowName) {
+                    workflows.push({
+                        name: workflowName,
+                        created: new Date(),
+                        status: 'saved'
+                    });
+                    showNotification('✅ Saved!', `Workflow "${workflowName}" saved successfully!`);
+                }
+            }, 1500);
+        }
+
+        function testWorkflow() {
+            const testBtn = document.querySelector('.control-btn:nth-child(3)');
+            simulateLoading(testBtn, 2500);
+            
+            showNotification('🧪 Testing', 'Running workflow test...');
+            
+            setTimeout(() => {
+                const testResults = {
+                    passed: Math.random() > 0.3,
+                    executionTime: Math.floor(Math.random() * 1000) + 500,
+                    nodesProcessed: 6
+                };
+                
+                if (testResults.passed) {
+                    showNotification('✅ Test Passed!', `Workflow executed successfully in ${testResults.executionTime}ms`);
+                } else {
+                    showNotification('❌ Test Failed', 'Workflow encountered errors. Check logs for details.', 'error');
+                }
+            }, 2500);
+        }
+
+        function updateWorkflowStatus(status) {
+            const statusItems = document.querySelectorAll('.status-item');
+            if (status === 'deployed') {
+                const activeStatus = statusItems[0]?.querySelector('span');
+                if (activeStatus) {
+                    const currentActive = parseInt(activeStatus.textContent.split(' ')[0]);
+                    activeStatus.textContent = `${currentActive + 1} Active`;
+                }
+            }
+        }
+
+        // Workflow Status Functions
+        function showActiveWorkflows() {
+            const activeWorkflows = [
+                'GitHub CI/CD Pipeline',
+                'Slack Notification Bot',
+                'Data Backup Automation',
+                'Email Marketing Sequence',
+                'Error Alert System'
+            ];
+            
+            alert(`🟢 Active Workflows (${activeWorkflows.length}):\n\n${activeWorkflows.map((w, i) => `${i+1}. ${w}`).join('\n')}\n\nAll workflows are running smoothly!`);
+        }
+
+        function showPendingWorkflows() {
+            const pendingWorkflows = [
+                'Database Migration Script',
+                'Report Generation Job',
+                'User Onboarding Flow'
+            ];
+            
+            alert(`🟡 Pending Workflows (${pendingWorkflows.length}):\n\n${pendingWorkflows.map((w, i) => `${i+1}. ${w}`).join('\n')}\n\nThese workflows are queued for execution.`);
+        }
+
+        function showErrorWorkflows() {
+            showNotification('🎉 All Good!', 'No workflows with errors. Great job!', 'success');
+        }
+
+        // Integration Functions
+        function integrateService(serviceName) {
+            const serviceConfigs = {
+                'Slack': {
+                    description: 'Send messages, create channels, and manage notifications',
+                    setupTime: '2 minutes',
+                    features: ['Message sending', 'Channel management', 'File uploads', 'Interactive buttons']
+                },
+                'GitHub': {
+                    description: 'Automate repository workflows, issues, and pull requests',
+                    setupTime: '1 minute',
+                    features: ['Push events', 'PR automation', 'Issue tracking', 'Release management']
+                },
+                'Salesforce': {
+                    description: 'Sync leads, opportunities, and customer data',
+                    setupTime: '5 minutes',
+                    features: ['Lead management', 'Opportunity tracking', 'Data sync', 'Custom objects']
+                },
+                'ChatGPT': {
+                    description: 'AI-powered text processing and generation',
+                    setupTime: '1 minute',
+                    features: ['Text generation', 'Content analysis', 'Summarization', 'Language translation']
+                }
+            };
+
+            const config = serviceConfigs[serviceName] || {
+                description: `Connect and automate ${serviceName} workflows`,
+                setupTime: '3 minutes',
+                features: ['Data sync', 'Automation triggers', 'Custom workflows', 'Real-time updates']
+            };
+
+            const integrate = confirm(`🔗 ${serviceName} Integration\n\n${config.description}\n\nSetup time: ${config.setupTime}\n\nFeatures:\n${config.features.map(f => `• ${f}`).join('\n')}\n\nWould you like to set up ${serviceName} integration?`);
+
+            if (integrate) {
+                showNotification('🔧 Setting up...', `Configuring ${serviceName} integration...`);
+                
+                setTimeout(() => {
+                    showNotification('✅ Connected!', `${serviceName} integration is now active and ready to use!`);
+                    
+                    // Update integration status
+                    const integrationItems = document.querySelectorAll('.integration-item');
+                    integrationItems.forEach(item => {
+                        if (item.querySelector('.integration-name').textContent === serviceName) {
+                            const status = item.querySelector('.integration-status');
+                            status.textContent = '✓ Connected';
+                            status.style.color = '#10B981';
+                        }
+                    });
+                }, 2000);
+            }
+        }
+
+        // Feature Modal Functions
+        function openFeatureModal(featureType) {
+            const features = {
+                ai: {
+                    title: '🤖 Adaptive AI Interface',
+                    content: `
+                        <h4>Intelligent Workflow Assistant</h4>
+                        <p>Our AI interface learns from your usage patterns to provide:</p>
+                        <ul>
+                            <li>🎯 Context-aware suggestions for workflow optimization</li>
+                            <li>🚀 Automated error detection and resolution recommendations</li>
+                            <li>📚 Personalized learning paths based on your skill level</li>
+                            <li>🔍 Smart debugging with root cause analysis</li>
+                            <li>⚡ Predictive scaling and performance optimization</li>
+                        </ul>
+                        <div class="code-preview">
+                            <pre><code>// AI suggests optimizations automatically
+await io.ai.optimize("workflow-performance", {
+  currentMetrics: workflowStats,
+  targetImprovement: "reduce-latency"
+});</code></pre>
+                        </div>
+                    `
+                },
+                hub: {
+                    title: '🔌 API Automation Hub',
+                    content: `
+                        <h4>Marketplace of Pre-built Integrations</h4>
+                        <p>Access our comprehensive integration ecosystem:</p>
+                        <ul>
+                            <li>🏪 100+ verified integration templates</li>
+                            <li>🔧 One-click setup with automatic authentication</li>
+                            <li>👥 Community-contributed workflows and patterns</li>
+                            <li>🔄 Auto-sync with service API updates</li>
+                            <li>📊 Usage analytics and performance insights</li>
+                        </ul>
+                        <button class="github-connect" onclick="browseIntegrations()">
+                            🔍 Browse Integration Marketplace
+                        </button>
+                    `
+                },
+                visual: {
+                    title: '👁️ Visual Workflow Studio',
+                    content: `
+                        <h4>Drag & Drop Workflow Designer</h4>
+                        <p>Build complex automations visually:</p>
+                        <ul>
+                            <li>🎨 Intuitive drag-and-drop interface</li>
+                            <li>📊 Real-time execution monitoring</li>
+                            <li>🐛 Visual debugging with step-by-step tracing</li>
+                            <li>🔀 Conditional branching and parallel execution</li>
+                            <li>📱 Collaborative editing with team members</li>
+                        </ul>
+                        <button class="github-connect" onclick="launchDesigner()">
+                            🎨 Launch Workflow Designer
+                        </button>
+                    `
+                },
+                modular: {
+                    title: '🔧 Modular Architecture',
+                    content: `
+                        <h4>Enterprise-Grade Flexibility</h4>
+                        <p>Built for scale and adaptability:</p>
+                        <ul>
+                            <li>🔄 Hot-swappable components without downtime</li>
+                            <li>📝 Version control with rollback capabilities</li>
+                            <li>🔒 Enterprise security and compliance</li>
+                            <li>⚡ Auto-scaling based on workload</li>
+                            <li>🌐 Multi-region deployment options</li>
+                        </ul>
+                        <button class="github-connect" onclick="viewArchitecture()">
+                            📐 View Architecture Details
+                        </button>
+                    `
+                }
+            };
+
+            const feature = features[featureType];
+            if (feature) {
+                // Create dynamic modal
+                const modalHTML = `
+                    <div id="featureModal" class="modal show">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">${feature.title}</h3>
+                                <button class="close-btn" onclick="closeModal('featureModal')">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                ${feature.content}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Remove existing feature modal
+                const existingModal = document.getElementById('featureModal');
+                if (existingModal) existingModal.remove();
+                
+                // Add new modal
+                document.body.insertAdjacentHTML('beforeend', modalHTML);
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Feature-specific functions
+        function browseIntegrations() {
+            closeModal('featureModal');
+            scrollToSection('integrations');
+            showNotification('🔍 Integration Hub', 'Browsing available integrations...');
+        }
+
+        function launchDesigner() {
+            closeModal('featureModal');
+            openWorkflowStudio();
+            showNotification('🎨 Designer', 'Launching visual workflow designer...');
+        }
+
+        function viewArchitecture() {
+            alert(`🏗️ Modular Architecture Overview\n\n🔧 Component System:\n• Microservices-based design\n• Independent scaling\n• Fault isolation\n\n📦 Deployment Options:\n• Cloud-native\n• On-premises\n• Hybrid setups\n\n🔒 Security Features:\n• Zero-trust architecture\n• End-to-end encryption\n• Audit logging`);
+            closeModal('featureModal');
+        }
+
+        // Metrics Functions
+        function showMetricDetails(metricType) {
+            const metrics = {
+                onboarding: {
+                    title: '⚡ Onboarding Performance',
+                    details: 'Traditional platforms: 8+ hours\nTrigger.dev: 2.8 hours\n\nFeatures that accelerate onboarding:\n• AI-guided setup wizard\n• Pre-configured templates\n• Interactive tutorials\n• Smart suggestions'
+                },
+                integration: {
+                    title: '🔗 Integration Speed',
+                    details: 'Manual setup: 2-3 days\nTrigger.dev: 2-4 hours\n\nAcceleration factors:\n• Pre-built connectors\n• Auto-authentication\n• Template marketplace\n• One-click deployment'
+                },
+                debugging: {
+                    title: '🐛 Debugging Efficiency', 
+                    details: 'Traditional debugging: 4-6 hours\nTrigger.dev: 2-3 hours\n\nDebug improvements:\n• Visual execution tracing\n• AI-powered error analysis\n• Step-by-step monitoring\n• Automatic suggestions'
+                },
+                modifications: {
+                    title: '🚀 Workflow Updates',
+                    details: 'Legacy systems: 2-4 hours\nTrigger.dev: 10-20 minutes\n\nSpeed improvements:\n• Hot-swappable components\n• Zero-downtime deployments\n• Version control\n• Instant rollbacks'
+                }
+            };
+
+            const metric = metrics[metricType];
+            if (metric) {
+                alert(`${metric.title}\n\n${metric.details}`);
+            }
+        }
+
+        // Social Media Functions
+        function openSocial(platform) {
+            const socialLinks = {
+                github: 'https://github.com/trigger-dev',
+                twitter: 'https://twitter.com/triggerdotdev', 
+                linkedin: 'https://linkedin.com/company/triggerdotdev',
+                discord: 'https://discord.gg/triggerdotdev'
+            };
+
+            showNotification('🌐 Opening Social', `Redirecting to ${platform.charAt(0).toUpperCase() + platform.slice(1)}...`);
+            
+            // In a real app, you would use: window.open(socialLinks[platform], '_blank');
+            setTimeout(() => {
+                showNotification('🔗 Social Link', `Would open: ${socialLinks[platform] || `https://${platform}.com/triggerdotdev`}`);
+            }, 1000);
+        }
+
+        // Example and Help Functions
+        function showExamples() {
+            const examples = [
+                '🤖 AI-Powered Code Review Bot',
+                '📧 Automated Email Campaigns', 
+                '🔄 Data Synchronization Pipeline',
+                '📊 Real-time Analytics Dashboard',
+                '🚨 Error Monitoring & Alerting',
+                '📱 Social Media Auto-posting',
+                '💰 Payment Processing Workflow',
+                '🎯 Lead Scoring Automation'
+            ];
+
+            const choice = prompt(`💡 Example Workflows\n\nChoose an example to explore:\n\n${examples.map((ex, i) => `${i+1}. ${ex}`).join('\n')}\n\nSelect (1-${examples.length}):`);
+            
+            if (choice && choice >= 1 && choice <= examples.length) {
+                const selectedExample = examples[choice - 1];
+                showNotification('📋 Example Loaded', `Loading template: ${selectedExample}`);
+                setTimeout(() => {
+                    openWorkflowStudio();
+                }, 1500);
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Trigger.dev MVP initialized!');
+            
+            // Animate elements when they come into view
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all slide-in elements
+            document.querySelectorAll('.slide-in').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease-out';
+                observer.observe(el);
+            });
+
+            // Close modals when clicking outside
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal')) {
+                    e.target.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Animate metrics on scroll
+            const metricsObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateMetricValue(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.metric-value').forEach(metric => {
+                metricsObserver.observe(metric);
+            });
+
+            // Show welcome message
+            setTimeout(() => {
+                showNotification('👋 Welcome!', 'Welcome to Trigger.dev - Enterprise Automation Platform');
+            }, 2000);
+        });
+
+        function animateMetricValue(element) {
+            const finalValue = element.textContent;
+            const isPercentage = finalValue.includes('%');
+            const isMultiplier = finalValue.includes('x');
+            
+            if (isPercentage) {
+                const numValue = parseInt(finalValue);
+                animateNumber(element, 0, numValue, '%');
+            } else if (isMultiplier) {
+                const numValue = parseInt(finalValue);
+                animateNumber(element, 1, numValue, 'x');
+            }
+        }
+
+        function animateNumber(element, start, end, suffix) {
+            const duration = 2000;
+            const startTime = performance.now();
+            
+            function updateNumber(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(start + (end - start) * progress);
+                
+                element.textContent = current + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateNumber);
+                }
+            }
+            
+            requestAnimationFrame(updateNumber);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'k':
+                        e.preventDefault();
+                        openWorkflowStudio();
+                        break;
+                    case '/':
+                        e.preventDefault();
+                        showNotification('⌨️ Shortcuts', 'Ctrl+K: Workflow Studio\nCtrl+G: Connect GitHub\nEsc: Close modal');
+                        break;
+                    case 'g':
+                        e.preventDefault();
+                        connectGitHub();
+                        break;
+                }
+            } else if (e.key === 'Escape') {
+                // Close any open modal
+                const openModals = document.querySelectorAll('.modal.show');
+                openModals.forEach(modal => {
+                    modal.classList.remove('show');
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Add some demo data
+        workflows = [
+            { name: 'GitHub CI/CD Pipeline', created: new Date(), status: 'active' },
+            { name: 'Slack Bot Automation', created: new Date(), status: 'active' },
+            { name: 'Data Backup Job', created: new Date(), status: 'pending' }
+        ];
+
+        console.log('✅ All functions loaded and ready!');
+    </script>
+</body>
+</html>
